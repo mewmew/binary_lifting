@@ -1,0 +1,39 @@
+digraph {
+	rankdir="LR"
+
+	// tools
+	ddisasm [shape=box color=purple]
+	lift_gtirb [shape=box color=blue]
+	lift_binary [shape=box color=blue]
+	type_oracle [shape=box color=blue]
+	// input/output
+	x86_binary [label="x86 binary"]
+	dwarf_dbg [label="DWARF debug information"]
+	GTIRB
+	type_info [label="type information"]
+	func_sigs [label="function signatures"]
+	globals [label="global variables"]
+	llvm_ir [label="LLVM IR"]
+
+	// disassemble
+	x86_binary -> ddisasm
+	ddisasm -> GTIRB
+
+	// parse type information
+	dwarf_dbg -> type_oracle
+	type_oracle -> type_info
+	type_oracle -> func_sigs
+	type_oracle -> globals
+
+	// lift GTIRB
+	GTIRB -> lift_gtirb
+	type_info -> lift_gtirb
+	lift_gtirb -> llvm_ir
+
+	// lift binary
+	x86_binary -> lift_binary
+	type_info -> lift_binary
+	func_sigs -> lift_binary
+	globals -> lift_binary
+	lift_binary -> llvm_ir
+}
