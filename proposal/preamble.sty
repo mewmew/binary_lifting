@@ -1,0 +1,160 @@
+\ProvidesPackage{preamble}
+
+\usepackage[english]{babel}
+\usepackage[margin=1in]{geometry}
+\usepackage[parfill]{parskip}
+
+% Centre verbatim text.
+%
+% Example:
+%    \begin{figure}
+%    \centering
+%    \begin{BVerbatim}
+%    foo
+%    \end{BVerbatim}
+%    \end{figure}
+\usepackage{fancyvrb}
+
+% Encode < and > correctly.
+\usepackage[T1]{fontenc}
+
+% Include bibliography in the table of contents.
+%
+% Options:
+%    nottoc: don't include the table of contents in the table of contents.
+\usepackage[nottoc]{tocbibind}
+
+% Use IEEE-style references.
+\bibliographystyle{ieeetr}
+
+% Import images.
+%
+% Examples:
+%    \includegraphics[width=\textwidth]{foo.png}
+\usepackage{graphicx}
+
+% Import PDFs.
+%
+% Examples:
+%    \includepdf[pages=-]{foo.pdf}
+\usepackage{pdfpages}
+
+% Source code listings, language definitions and styles.
+%
+% Examples:
+%    \lstinputlisting[language=llvm, style=nasm]{foo.ll}
+\usepackage{listings}
+\usepackage{../latex/go/lang}
+\usepackage{../latex/go/style}
+\usepackage{../latex/c/style}
+\usepackage{../latex/llvm/lang}
+\usepackage{../latex/nasm/lang}
+\usepackage{../latex/nasm/style}
+\usepackage{../latex/reil/lang}
+\usepackage{../latex/diff/lang}
+\usepackage{../latex/diff/style}
+\usepackage{../latex/dot/lang}
+\usepackage{../latex/dot/style}
+
+% Sub figures.
+%
+% Examples:
+%    \begin{figure}[htbp]
+%       \centering
+%       \begin{subfigure}[ht]{0.50\textwidth}
+%          foo
+%       \end{subfigure}
+%       \begin{subfigure}[ht]{0.50\textwidth}
+%          foo
+%       \end{subfigure}
+%       \caption{foo}
+%    \end{figure}
+\usepackage{subcaption}
+
+% Add multi-column and multi-row support for tables.
+%
+% Examples:
+%    \multicolumn{4}{|l|}{foo}
+\usepackage{multirow}
+
+% Colors from the fill color selection of Google Docs spreadsheets.
+\definecolor{light_red_2}{HTML}{EA9999}
+\definecolor{light_red_3}{HTML}{F4CCCC}
+\definecolor{light_green_2}{HTML}{B6D7A8}
+\definecolor{light_green_3}{HTML}{D9EAD3}
+\definecolor{light_gray_2}{HTML}{EFEFEF}
+\definecolor{light_gray_3}{HTML}{F3F3F3}
+
+% Produce colorful tables.
+%
+% Example:
+%    \begin{table}[htbp]
+%       \begin{tabular}{|l|l|}
+%          \hline
+%          foo & bar \\
+%          \hline
+%          \rowcolor{red}
+%          a & b \\
+%          \rowcolor{green}
+%          c & d \\
+%          \hline
+%       \end{tabular}
+%    \end{table}
+\usepackage{colortbl}
+
+% Use footnotes in floating environments.
+%
+% NOTE: There is a conflict between the xcolor and the footnote packages. The
+% solution is to load the xcolor package first.
+%
+% ref: http://texblog.org/2012/02/03/using-footnote-in-a-table/
+%
+% Example:
+%    \begin{savenotes}
+%       \begin{table}[htbp]
+%          \centering
+%          \begin{tabular}{|l|l|}
+%             \hline
+%             A & B \footnote{foo} \\
+%             \hline
+%             C & D \footnote{bar} \\
+%             \hline
+%          \end{tabular}
+%          \caption{baz}
+%       \end{table}
+%    \end{savenotes}
+\usepackage{footnote}
+
+% Add support for links.
+%
+% Options:
+%    hidelinks: don't show red boxes around links.
+%
+% Examples:
+%    \url{http://example.org/}
+\usepackage[hidelinks]{hyperref}
+
+% Use fancy headers, e.g.
+%
+%    2.2 Decompilation Phases                           2 LITERATURE REVIEW
+%    ______________________________________________________________________
+%
+% The fancyhdr package must be included after the geomtry package, to use the
+% correct margin.
+%\usepackage{fancyhdr}
+%\pagestyle{fancy}
+
+% Force the first float on float-only pages to be top-aligned.
+%
+% ref: http://tex.stackexchange.com/a/28565
+\makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpbot}{0pt plus 1fil}
+\makeatother
+
+% Add \todo command to underline text in yellow.
+%
+% Examples:
+%    \todo{foo}
+\usepackage{adjustbox}
+\newcommand{\todo}[1]{\adjustbox{bgcolor=yellow}{#1}}
