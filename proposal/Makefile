@@ -2,7 +2,7 @@ all: binary_lifting_proposal.pdf
 
 %.pdf: %.tex
 	latexrun --latex-cmd=xelatex -o $@ $<
-	# Compile again (to fix section progress bar).
+	# Compile again, because LaTeX.
 	latexrun --latex-cmd=xelatex -o $@ $<
 
 .PHONY: clean inc
