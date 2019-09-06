@@ -5,6 +5,8 @@
 \title{Degree Project Proposal \\ \Large Lifting Binaries to LLVM IR using Type Information Oracles}
 \author{Robin Eklind \\ \input{my_email}}
 
+% ref: https://www.kth.se/social/group/examensarbete-vid-cs/page/exjobb-task-description/
+
 \begin{document}
 
 % === [ Front matter ] =========================================================
@@ -33,6 +35,8 @@
 	\textit{What will be the subject of the degree project?}
 \end{quote}
 
+%\todo{update title: using a diverse set of oracles.}
+
 The preliminary title of the degree project is ``Lifting Binaries to LLVM IR using Type Information Oracles''.
 
 \section{Background/Conditions}
@@ -41,11 +45,15 @@ The preliminary title of the degree project is ``Lifting Binaries to LLVM IR usi
 	\textit{Why and where will the practical part of the degree project be carried out?}
 \end{quote}
 
-The degree project will be carried at at KTH with Roberto Guanciale as supervisor, and the research topic is motivated \todo{foo}, in part, as described by Roberto Guanciale:
+The degree project will be carried out at KTH with Roberto Guanciale as supervisor, and the research topic is motivated by several use cases, both in academia and industry. In particular, the aim of this research project is to improve upon the state-of-the-art in binary lifting to facilitate binary analysis; a topic that is both under active research in a multitude of academic institutions and that is of great interest to and has real-world impact in the IT-security industry.
+
+Below follows an extract by Roberto Guanciale to motivate working on this research problem:
 
 \begin{quote}
 	\textit{``It is a problem that has impact. There is a large amount of closed source code and binary blobs that are developed by third parties. Moreover, in some cases we would like to not rely on correctness of the compiler (or assume that the compiler has not been tampered).''} -- Roberto Guanciale
 \end{quote}
+
+%\todo{add ref: G. Balakrishnan and T. Reps, ``WYSINWYX: What you see is not what you execute,'' ACM Transactions on Programming Languages and Systems, vol. 32, no. 6, pp. 23:1–23:84, 2010.}
 
 \section{Research Question}
 
@@ -54,39 +62,66 @@ The degree project will be carried at at KTH with Roberto Guanciale as superviso
 \end{quote}
 
 \begin{quote}
-	\textbf{The QUESTION} that will be examined.
+	\textit{\textbf{The QUESTION} that will be examined.}
 \end{quote}
+
+The research question(s) to be examined are:
+
+\begin{enumerate}
+	\item ``What factors limit the effectiveness and usability of current binary lifters (e.g. MC-Semantics\footnote{MC-Semantics: \url{https://github.com/trailofbits/mcsema}}, Dagger\footnote{Dagger: \url{https://github.com/repzret/dagger}}, Miasm\footnote{Miasm: \url{https://github.com/cea-sec/miasm}}) that restrict the use of their intermediate representation (IR) output in further binary analysis applications (e.g. decompilation, automated vulnerability discovery, validation of concurrent memory access, etc)?''; and
+	\item ``Would using Type Information Oracles improve the effectiveness and usability of binary lifters by improving the quality of their IR output, and thus facilitate further binary analysis use cases?''
+\end{enumerate}
 
 % TODO: add note about the output usability of the IR. now using a CPU struct, but rather outputing a higher-level IR with function arguments being identified. facilitates further binary analysis.
 
-The research question to be examined in this project is \textit{``Can the principle of separation of concern be leveraged to improve upon the state-of-the-art in binary analysis and binary lifting?''}
+%The research question to be examined in this project is \textit{``Can the principle of separation of concern be leveraged to improve upon the state-of-the-art in binary analysis and binary lifting?''}
+
+% what you see if not what you execute.
 
 \begin{quote}
-	\textbf{The RESEARCH AREA} for the project.
+	\textit{\textbf{The RESEARCH AREA} for the project.}
+\end{quote}
+
+The research area(s) of the project are binary analysis, IT-security, type analysis, and formal methods.
+
+\begin{quote}
+	\textit{\textbf{CONNECTION TO RESEARCH/DEVELOPMENT}: Describe how the assignment is connected to current research or development. Describe why the question is of interest and to whom?}
+\end{quote}
+
+The research interest in binary analysis and in particular decompilers date back to the 1960s, when decompilers were used to facilitate the translation of software written for second generation computers (those using transistors) to third generation computers (those using integrated circuits) \cite{reverse_compilation}. Since then binary analysis has seen more intense research interest and a wide range of applications in industry. Today binary analysis is among others used for validating the output of compilers (a tribute to Ken Thompson's \textit{``Reflections on Trusting Trust''} Turing Award Lecture \cite{trusting_trust}), automatically locating and mitigating security vulnerabilities \cite{state_of_the_art_of_war}, transpiling software from one source language to another target language or from one source platform to another target platform, instrumenting binaries with profiling capabilities or security enforcements (e.g. control flow integrity enforcement) \cite{superset_disassembly}, and analyzing polyglot code bases (those written in multiple programming languages) where the platform-independent IR functions as a shared representation layer for analysis.
+
+However, the way that current binary lifters (including MC-Semantics and Dagger) often model instruction semantics and their effect on CPU state is by passing around a pointer to a CPU state structure -- containing fields for each register in the register bank -- as a parameter to functions being invoked. While semantically correct, this approach limits the effectiveness of the output IR as it requires precise pointer aliasing and sophisticated inter-procedural analysis.
+
+% Output as a single function (rev.ng)
+
+\begin{quote}
+	\textit{\textbf{EXAMINATION METHOD}: How shall the specified question be examined?}
+\end{quote}
+
+\todo{foo}
+
+Quantifying parameters:
+\begin{itemize}
+	\item quality of output
+		\item number of standard tools that may be used without modifying the output IR.
+			\item KLEE
+		\item correctness (e.g. test cases in Coreutils)
+		\item line count (and byte count)
+		\item speed of execution
+		\item histogram of instructions used
+	\item ease of use
+	\item ease of installation
+	\item performance
+\end{itemize}
+
+\begin{quote}
+	\textit{\textbf{HYPOTHESIS}: What are the possible/probable outcomes of the examination?}
 \end{quote}
 
 \todo{foo}
 
 \begin{quote}
-	\textbf{CONNECTION TO RESEARCH/DEVELOPMENT}: Describe how the assignment is connected to current research or development. Describe why the question is of interest and to whom?
-\end{quote}
-
-\todo{foo}
-
-\begin{quote}
-	\textbf{EXAMINATION METHOD}: How shall the specified question be examined?
-\end{quote}
-
-\todo{foo}
-
-\begin{quote}
-	\textbf{HYPOTHESIS}: What are the possible/probable outcomes of the examination?
-\end{quote}
-
-\todo{foo}
-
-\begin{quote}
-	\textbf{EVALUATION}: How can one determine if the objective of the degree project has been fulfilled and if the question has been answered adequately?
+	\textit{\textbf{EVALUATION}: How can one determine if the objective of the degree project has been fulfilled and if the question has been answered adequately?}
 \end{quote}
 
 \todo{foo}
@@ -94,7 +129,7 @@ The research question to be examined in this project is \textit{``Can the princi
 \section{Background of the Degree Project Student}
 
 \begin{quote}
-	\textit{Describe the knowledge (courses and/or experiences) you have that makes this an appropriate assignment for you.}
+	\textit{\textit{Describe the knowledge (courses and/or experiences) you have that makes this an appropriate assignment for you.}}
 \end{quote}
 
 For this section, the author of the degree project proposal will switch to a first person narrative.
@@ -104,62 +139,30 @@ For the last 10 years, I've been working as an IT-security consultant; full-time
 \section{Limits/Resources}
 
 \begin{quote}
-	\textit{What is already available at the company (or other host institution) in the form of previous projects, software, expertise, etc.?}
+	\textit{\textit{What is already available at the company (or other host institution) in the form of previous projects, software, expertise, etc.?}}
 \end{quote}
 
-% The description must ensure that there is adequate preparation so that the degree project student does not need to do all their practical work without an established foundation, thus assuring time for conducting the scientific investigation.
+As part of a preparation for the literature review, at least one research paper \cite{sound_transpilation_from_binary_to_ir} has been identified that directly relates to the research to be conducted within this degree project, the author of which is Roberto Guanciale, who will be supervising this project. As such, the host institution can definitely be considered to have expertise in the research area of inquiry, with research groups conducting active research in the same domain.
 
-\todo{foo}
+For reference, the preparation for the literature review has resulted in the following preliminary list of research papers to assess \cite{graph_based_ir,retargetable_binary_translator,dynamic_binary_translation,uqbt_binary_translator,retargetable_static_binary_translator,ssa_for_decompilation,valgrind,bitblaze,architecture_independent_binary_analysis_and_transformation,arm_analysis_using_llvm,bap,revgen,wartell_rewriting_x86_binaries,barf,singled_graph_disassembly,dbill,instruction_idiom_detection,graph_based_higher_order_ir,reconstruction_of_instruction_idioms,extracting_instruction_semantics_via_symbolic_exectuion_of_code_generators,software_transformation,state_of_the_art_of_war,function_recovery,bin2llvm,sound_transpilation_from_binary_to_ir,cast_study_llvm_suitable_for_binary_analysis,revng,evaluation_of_irs,binrec,lifter_synthesis,superset_disassembly,b2r2,llvm_ir_lifter_using_mcsema_and_dyninst,gtirb,case_for_bap_and_angr,retrowrite}.
+
+% The description must ensure that there is adequate preparation so that the degree project student does not need to do all their practical work without an established foundation, thus assuring time for conducting the scientific investigation.
 
 \section{Eligibility and Study Planning}
 
 \begin{quote}
 	\textit{\textbf{Eligibility}: It is your responsibility, as a student, to verify that you are eligible to start your degree project. You must in your assignment description assure that you have completed all courses for the bachelors' degree and at least 60hp completed second cycle courses and that the 60hp include a course in scientific theory and method (e.g. DA2205, DA2210, DH2610, DM2572) and all courses relevant for the thesis.}
+\end{quote}
 
+I hereby assert that I have completed my Bachelor's degree in Computer Science, as received by Uppsala University. Furthermore, I assert that I have completed at least 60hp second cycle courses, including a course in scientific theory and method (the course code of which is \textbf{DA2210}: \textit{Introduction to the Philosophy of Science and Research Methodology for Computer Scientists}) and all courses relevant for this thesis (including \textbf{DD2481}: \textit{Principles of Programming Languages} and \textbf{DD2452}: \textit{Formal Methods}).
+
+\begin{quote}
 	\textit{\textbf{Study planning}: Also, you must list all courses remaining before you may apply for the master's degree and briefly describe how and when you plan to complete those courses.}
 \end{quote}
 
+The single remaining course I intend to finish before applying for the Master's degree is a course in Graph Theory (course code \textbf{SF2740}), to which I'm already registered and will be taking during HT19. I see no problem in completing this course along-side my degree project, and feel confident in the outcome.
+
 % This is aimed to ensure that the thesis really is one of the last elements of your education.
-
-\todo{foo}
-
-foo \cite{graph_based_ir}
-\cite{retargetable_binary_translator}
-\cite{dynamic_binary_translation}
-\cite{uqbt_binary_translator}
-\cite{retargetable_static_binary_translator}
-\cite{ssa_for_decompilation}
-\cite{valgrind}
-\cite{bitblaze}
-\cite{architecture_independent_binary_analysis_and_transformation}
-\cite{arm_analysis_using_llvm}
-\cite{bap}
-\cite{revgen}
-\cite{wartell_rewriting_x86_binaries}
-\cite{barf}
-\cite{singled_graph_disassembly}
-\cite{dbill}
-\cite{instruction_idiom_detection}
-\cite{graph_based_higher_order_ir}
-\cite{reconstruction_of_instruction_idioms}
-\cite{extracting_instruction_semantics_via_symbolic_exectuion_of_code_generators}
-\cite{software_transformation}
-\cite{state_of_the_art_of_war}
-\cite{function_recovery}
-\cite{bin2llvm}
-\cite{sound_transpilation_from_binary_to_ir}
-\cite{cast_study_llvm_suitable_for_binary_analysis}
-\cite{revng}
-\cite{evaluation_of_irs}
-\cite{binrec}
-\cite{lifter_synthesis}
-\cite{superset_disassembly}
-\cite{b2r2}
-\cite{llvm_ir_lifter_using_mcsema_and_dyninst}
-\cite{gtirb}
-\cite{case_for_bap_and_angr}
-\cite{retrowrite}
-
 
 % === [ Back matter ] ==========================================================
 
