@@ -84,9 +84,9 @@ The research area(s) of the project are binary analysis, IT-security, type analy
 	\textit{\textbf{CONNECTION TO RESEARCH/DEVELOPMENT}: Describe how the assignment is connected to current research or development. Describe why the question is of interest and to whom?}
 \end{quote}
 
-The research interest in binary analysis and in particular decompilers date back to the 1960s, when decompilers were used to facilitate the translation of software written for second generation computers (those using transistors) to third generation computers (those using integrated circuits) \cite{reverse_compilation}. Since then binary analysis has seen more intense research interest and a wide range of applications in industry. Today binary analysis is among others used for validating the output of compilers (a tribute to Ken Thompson's \textit{``Reflections on Trusting Trust''} Turing Award Lecture \cite{trusting_trust}), transpiling locating and mitigating security vulnerabilities \cite{state_of_the_art_of_war}, transpiling software from one source language to another target language or from one source platform to another target platform, instrumenting binaries with profiling capabilities or security enforcements (e.g. control flow integrity enforcement) \cite{superset_disassembly}, and analyzing polyglot code bases (those written in multiple programming languages) where the platform-independent IR functions as a shared representation layer for analysis \cite{revgen}.
+The research interest in binary analysis and in particular decompilers date back to the 1960s, when decompilers were used to facilitate the translation of software written for second generation computers (those using transistors) to third generation computers (those using integrated circuits) \cite{reverse_compilation}. Since then binary analysis has seen more intense research interest and a wide range of applications in industry. Today binary analysis is among others used for validating the output of compilers (a tribute to Ken Thompson's \textit{``Reflections on Trusting Trust''} Turing Award Lecture \cite{trusting_trust}), locating and mitigating security vulnerabilities \cite{state_of_the_art_of_war}, transpiling software from a source language to another target language or from a source platform to another target platform, instrumenting binaries with profiling capabilities or security enforcements (e.g. control flow integrity enforcement) \cite{superset_disassembly}, and analyzing polyglot code bases (those written in multiple programming languages) where the platform-independent IR functions as a shared representation layer for analysis \cite{revgen}.
 
-However, the way that current binary lifters (including MC-Semantics and Dagger) often model instruction semantics and their effect on CPU state is by passing around a pointer to a CPU state structure -- containing fields for each register in the register bank -- as a parameter to functions being invoked. While semantically correct, this approach limits the effectiveness of the output IR as it requires precise pointer aliasing and sophisticated inter-procedural analysis.
+However, the way that current binary lifters (including MC-Semantics and Dagger) often model instruction semantics and their effect on CPU state is by passing around a pointer to a CPU state structure as a parameter to functions being invoked, with the CPU state structure containing fields for each register in the register bank. While semantically correct, this approach limits the effectiveness of the output IR as it requires precise pointer aliasing and sophisticated inter-procedural analysis.
 
 % Output as a single function (rev.ng)
 
@@ -98,20 +98,20 @@ The research question(s) will be examined first by conducting an in-depth resear
 
 Quantifying parameters:
 \begin{itemize}
-	\item quality of output
+	\item quality of LLVM IR output of the binary lifter
 	\begin{itemize}
 		\item number of standard LLVM IR tools that may be used without modifying the output IR
 		\begin{itemize}
 			\item KLEE (a Symbolic Execution Engine for LLVM IR)
 			\item $\dots$
 		\end{itemize}
-		\item correctness (e.g. percentage of test cases in Coreutils passing in lifted LLVM IR)
+		\item correctness (e.g. percentage of test cases in Coreutils passing in the lifted LLVM IR)
 		\item size of output (e.g. line count and byte count)
 		\item speed of execution of lifted IR
 		%\item histogram of instructions used?
 	\end{itemize}
 	\item ease of use
-	\item ease of installation (measured in wall-time to compile and dependencies and tools used for lifting)
+	\item ease of installation (measured in wall-time to compile the dependencies and tools used for lifting)
 	\item performance of tools
 \end{itemize}
 
@@ -119,7 +119,7 @@ Quantifying parameters:
 	\textit{\textbf{HYPOTHESIS}: What are the possible/probable outcomes of the examination?}
 \end{quote}
 
-A probable outcome of the degree project is that a set of limitations are identified in the current binary lifters available, as well as strengths and sound approaches for binary lifting. In particular, one limiting factor may be the chosen way to model CPU state changes, as outlined in the \textit{CONNECTION TO RESEARCH/DEVELOPMENT} subsection. Other limiting factors will be identified and outlined in the project.
+A probable outcome of the degree project is that a set of limitations are identified in the current binary lifters available, as well as strengths and sound approaches for binary lifting. In particular, one limiting factor may be the chosen way to model CPU state changes, as outlined in the \textit{CONNECTION TO RESEARCH/DEVELOPMENT} subsection. Other limiting factors will be identified and outlined as part of the project.
 
 Another outcome of the degree project is the development of binary lifting techniques that mitigate identified limitations, and in doing so strive to improve upon the state-of-the-art in binary lifting.
 
@@ -127,7 +127,7 @@ Another outcome of the degree project is the development of binary lifting techn
 	\textit{\textbf{EVALUATION}: How can one determine if the objective of the degree project has been fulfilled and if the question has been answered adequately?}
 \end{quote}
 
-Evaluating the objectives of the degree project should be quite straight forward as the limiting factors may easily be assessed for different binary lifters (e.g. whether their IR output can be used as input to standard LLVM IR analysis tools). Furthermore, the same evaluation methodologies that would be used for current binary lifters could also be applied to the to-be-developed binary lifter technologies of the degree project, the quantitative performance measurement of which could serve as one evaluation metric. Furthermore, the limitations would be documented as part of the degree project report, which would constitute a major project deliverable.
+Evaluating the objectives of the degree project should be quite straight forward as the limiting factors may easily be assessed for different binary lifters (e.g. whether their IR output can be used as input to standard LLVM IR analysis tools). Furthermore, the same evaluation methodologies that would be used for current binary lifters could also be applied to the to-be-developed binary lifter technologies of the degree project, the quantitative performance measurement of which could serve as one evaluation metric. Furthermore, the identified strengths and limitations would be documented as part of the degree project report, which would constitute a major project deliverable.
 
 \section{Background of the Degree Project Student}
 
@@ -137,9 +137,9 @@ Evaluating the objectives of the degree project should be quite straight forward
 
 For this section, the author of the degree project proposal will switch to a first person narrative.
 
-For the last 10 years, I've been working as an IT-security consultant; full-time prior to becoming a University student and part-time since. To assess the security of IT-systems of customers, I have together with my colleges conducted a range of penetration tests, malware forensic investigations, reverse engineering of software components and network protocols. To facilitate this work, we use state-of-the-art tools available for binary analysis and decompilation (including but not limited to the interactive disassembler IDA Pro, the Hex-Rays decompiler, a range of debuggers, execution tracers and binary analysis tools such as MC-Semantics). While these tools have facilitated our work tremendously, there are also been weak points that made themselves apparent over the years. For these reasons, I have conducted several prior research projects trying to improve upon the state-of-the-art in this areas. To date, I've written my Bachelor's degree project on the topic of \textit{``Compositional Decompilation using LLVM IR''} \cite{compositional_decompilation}, an individual research project titled \textit{``Evaluation of Methods for Effective Control Flow Recovery''} supervised by Christian Schulte, an individual research project titled \textit{``Type Analysis of Low-level Code''}\footnote{Type Analysis of Low-level Code: \url{https://github.com/decomp/doc/raw/master/report/type_analysis/type_analysis.pdf}} as part of the course \textit{Principles of Programming Languages} given by Philipp Haller. The Master's degree research project presented in this proposal is the natural continuation of this prior research, and each of these works complement one another.
+For the last 10 years, I've been working as an IT-security consultant; full-time prior to becoming a University student and part-time since. To assess the security of IT-systems at customers, I have together with my colleges conducted a range of penetration tests, malware forensic investigations, reverse engineering of software components and network protocols. To facilitate this work, we use state-of-the-art tools available for binary analysis and decompilation (including but not limited to the interactive disassembler IDA Pro, the Hex-Rays and Ghidra decompilers, a range of debuggers, execution tracers and binary analysis tools such as MC-Semantics). While these tools have facilitated our work tremendously, there are also been weak points that made themselves apparent over the years. For these reasons, I have conducted several prior research projects trying to improve upon the state-of-the-art in this areas. To date, I've written my Bachelor's degree project on the topic of \textit{``Compositional Decompilation using LLVM IR''} \cite{compositional_decompilation}, an individual research project titled \textit{``Evaluation of Methods for Effective Control Flow Recovery''}\footnote{Evaluation of Methods for Effective Control Flow Recovery: \url{https://github.com/decomp/doc/raw/master/presentation/control_flow_analysis/cfa_presentation.pdf}} supervised by Christian Schulte, and an individual research project titled \textit{``Type Analysis of Low-level Code''}\footnote{Type Analysis of Low-level Code: \url{https://github.com/decomp/doc/raw/master/report/type_analysis/type_analysis.pdf}} as part of the course \textit{Principles of Programming Languages} given by Philipp Haller. The Master's degree research project presented in this proposal is the natural continuation of this prior research, and each of these works complement one another.
 
-At KTH, UU and University of Portsmouth I've taken the following courses that are particularly relevant for this Master's degree project on binary analysis:
+At KTH, Uppsala University and University of Portsmouth I've taken the following courses that are particularly relevant for this Master's degree project on binary analysis:
 
 \begin{itemize}
 	\item \textbf{1DL321} Compiler Design I (Uppsala University)
