@@ -1,0 +1,238 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage{preamble}
+
+\title{Degree Project Specification \\ \Large Binary Lifting to LLVM IR using Type Information Oracles}
+\author{Robin Eklind \\ \input{my_email}}
+%\date{2019-10-03}
+
+% ref: https://www.kth.se/social/group/examensarbete-vid-cs/page/specification-with-timetable/
+
+\begin{document}
+
+% ___ [ Front matter ] _________________________________________________________
+
+\pagenumbering{roman}
+
+% === [ Title page ] ===========================================================
+
+\maketitle
+
+\clearpage
+
+% === [ Table of contents ] ====================================================
+
+\tableofcontents
+
+\clearpage
+
+% ___ [ Main matter ] __________________________________________________________
+
+\pagenumbering{arabic}
+
+% === [ Formalities ] ==========================================================
+
+\section{Formalities}
+
+\begin{itemize}
+	\item \textbf{Preliminary title}: ``Binary Lifting to LLVM IR using Type Information Oracles''
+	\item \textbf{Degree project student}: Robin Eklind \input{my_email}
+	\item \textbf{Supervisor}: Roberto Guanciale \url{robertog@kth.se}
+	\item \textbf{Examiner}: Mads Dam \url{mfd@kth.se}
+	\item \textbf{Current date}: 2019-11-26
+\end{itemize}
+
+% === [ Background and Objectives ] ============================================
+
+\section{Background and Objectives}
+
+% --- [ Background ] -----------------------------------------------------------
+
+\paragraph{Background}
+
+A binary lifter is a tool which takes as input a binary file (e.g. a binary executable, an object file or a shared library), disassembles the machine code and lifts (i.e. translates) the platform-specific assembly instructions to a platform-independent intermediate representation (IR). Binary lifters are essential tools for binary analysis, as the platform-independent IR enable re-use of analysis passes. For the same reason that compilers lower source code to an IR before translating the IR to machine code (which for $n$ source languages and $m$ target platforms require $n + m$ implementations with the IR, rather than $n * m$ without the IR), decompilers and binary analysis frameworks operate on an IR.
+
+As the quality of the results of the binary analysis frameworks are directly dependent on the quality of the IR, a lot of research effort has focused on the implementation of binary lifters, and associated subproblems; e.g. code/data separation (a problem known to be undecidable), type analysis, formal semantics of an ISA (Instruction Set Architecture), validation of correctness, and performance considerations. Even the state-of-the-art research and open source binary lifters have drawbacks and shortcomings, some due to design considerations, other due to lack of development time. The main objective of this degree project is to assess the former (shortcomings due to design decisions) and propose solutions.
+
+% --- [ Objective ] ------------------------------------------------------------
+
+\paragraph{Objective}
+
+The objective of the degree project is to assess the state-of-the-art in binary lifting, determine strengths and weaknesses with current approaches, and suggest potential methods for improving upon the quality of the binary lifters' output IR.
+
+% === [ Research Question and Method ] =========================================
+
+\section{Research Question and Method}
+
+% --- [ Research Question ] ----------------------------------------------------
+
+\paragraph{Research Question}
+
+\begin{enumerate}
+	\item What design decisions of current state-of-the-art binary lifters limit the quality of their output IR, such that specific analysis passes of analysis tools operating on the IR fail?;
+	\item And how may such design decisions be mitigated such that the same analysis passes succeed (e.g. the \texttt{mem2reg} analysis and optimization pass of the LLVM optimizer \texttt{opt})?
+\end{enumerate}
+
+% --- [ Problem Definition ] ---------------------------------------------------
+
+\paragraph{Problem Definition}
+
+Binary analysis is challenging as a lot of information is removed as part of the compilation process (e.g. information about high-level control flow structures, function boundaries, signatures, and calling conventions, types, local variables, etc). Each of these subproblems of binary analysis is worthy of a degree project in their own right, and have indeed been studied in such a fashion (e.g. rev.ng PhD thesis \cite{revng} to recover the control flow graph and function boundaries of binary executables).
+
+To determine whether a solution to these subproblems would equate to the ability of producing high-quality IR output from binary lifters, a binary lifter will be designed and implemented as part of this degree project which makes use of information from ground truth Oracles. These Oracles will provide type information, target of indirect calls and branches, and similar obstacles to binary analysis that while solvable take considerable amount of time and are indeed active research topics in their own right. Even with ground truth information at hand, several design considerations of the binary lifter will ultimately determine the quality of the IR output; such as design decisions on how to model the CPU, function boundaries and control flow recovered from indirect branches. Naiive modelling of the CPU is used in several state-of-the art binary lifters, as it helps guarantee correctness, but such modelling (e.g. by passing an argument to each function with a pointer to a structure containing the CPU and FPU register bank of the ISA) limits the applicability of the output IR.
+
+Thus, the problem is two-fold;
+\begin{enumerate}
+	\item Identify what subproblems are representable as ground truth Oracles, each of which may become a future research topic for tools and analysis providing the same set of information (e.g. pointer aliasing analysis);
+	\item Implement a model of the CPU that is both correct and that facilitate further analysis by focusing on the quality of the output IR.
+\end{enumerate}
+
+% --- [ Examination Method ] ---------------------------------------------------
+
+\paragraph{Examination Method}
+
+The examination method will consist of both evaluation of existing binary lifters, an assessment of their respective strengths and weaknesses, with particular attention to the design decisions taken on how they model the ISA in IR. For any subproblem in binary analysis and binary lifting there exist a lot of different approaches, such as how to model the stack and heap (e.g. IDA Pro models the stack as a set of byte-sized registers, which was later described to be a limitation and a mistake; whereas other projects employ the notion of a shadow stack to model push and pop operations which access the local variables on the stack). The process will be experimental and iterative, in that different methods will be prototypes and continuously evaluated to assess how different analysis tools are able to handle the output. A very early prototype has been used to determine design considerations that are critical for enabling the \texttt{mem2reg} optimization and analysis pass of the LLVM optimizer. As further detailed below, test cases of Coreutils will also be used to assess the correctness of the lifting, but this is at a later stage of implementation.
+
+% --- [ Expected Scientific Results ] ------------------------------------------
+
+\paragraph{Expected Scientific Results}
+
+As part of the degree project, an assessment will be made into the effect of design decisions for modelling the CPU and FPU of an ISA in an IR, and how minor decisions can have huge consequence for the applicability of the IR. The underlying reasons for such large consequences will be investigated and elaborated, the results of which are useful when deciding how to model an ISA for binary lifting, binary analysis or potentially formal verification efforts.
+
+The hypothesis being tested is: \textit{deliberate design decisions of how to model the ISA in a binary lifter may have huge consequence on the applicability and quality of the output IR}.
+
+To validate whether the hypothosis is true, the output IR of the binary lifter will be compared against that prior-art binary lifter research projects. The tests will be both on the correctness of translation (as further elaborated below), and on the applicability and quality of the output IR. The applicability is tested by conducting further analysis using pre-existing analysis tools (such as the symbolic execution engine KLEE and the LLVM optimizer). The set of successful analysis passes completed without modification of the output IR determines its applicability (e.g. the dead code elimination pass may be prevented from succeeding by incomplete knowledge of pointer aliasing or the requirement of expensive inter-procedural analysis, both of which may be the direct result of design decisions on how to model the ISA which could be mitigated with a more deliberately designed model of the ISA).
+
+% === [ Evaluation and News Value ] ============================================
+
+\section{Evaluation and News Value}
+
+% --- [ Evalution ] ------------------------------------------------------------
+
+\paragraph{Evalution}
+
+There are three main approaches for validating correctness that have been used in prior research:
+
+\begin{enumerate}
+	\item Compile source code with test cases to binary and check if test cases pass on lifted IR (from \cite{type_inference_on_executables}: "The programs most used for evaluation are the GNU Core Utilities (Coreutils)").
+	\begin{enumerate}
+		\item Lift binary to IR.
+		\item Run test cases of binary, then $n$ of $n$ pass.
+		\item Run test cases of lifted IR, then $m$ of $n$ pass where $m$ is in range $[0, n]$.
+	\end{enumerate}
+	\item N-version IR testing as proposed in \cite{evaluation_of_irs}.
+	\begin{enumerate}
+		\item For each lifter $L_i$ of $N$ different lifters.
+		\begin{enumerate}
+			\item Lift a single assembly instruction to IR using lifter $L_i$.
+			\item Convert lifter $L_i$ IR to unified IR.
+			\item Compute symbolic summary of unified IR; the symbolic state change made by the unified IR to a model representation of the CPU.
+		\end{enumerate}
+		\item Compare the symbolic summary from the N different lifters.
+		\begin{enumerate}
+			\item If a discrepancy is found, there is a bug in at least one of the lifters.
+		\end{enumerate}
+	\end{enumerate}
+	\item Formal verification, with proof producing lifter \cite{sound_transpilation_from_binary_to_ir}.
+	\begin{enumerate}
+		\item Formally model the ISA, the semantics of each ISA instruction and the effects they have on the state of e.g. the CPU and memory.
+		\item Formally model the IR, the semantics of each IR instruction and the effects they have on an abstract model of e.g. the CPU and memory.
+		\item Lift binary to IR and for each transformation from ISA instruction to IR instructions, produce format proof that the applied transformation has the same effect on state of e.g. the ISA CPU and memory as the abstract model of e.g. the CPU and memory.
+	\end{enumerate}
+\end{enumerate}
+
+For this degree project, the \textbf{first} approach will be used to validate the correctness of the binary lifter's output IR.
+
+% --- [ Novelty ] --------------------------------------------------------------
+
+\paragraph{Novelty}
+
+The main idea behind the degree project is to improve upon the output quality of the IR of binary lifters, such that it may be used without modification with existing analysis tools for LLVM IR (such as the various optimization passes of the LLVM optimizer, the symbolic execution engine KLEE, etc). Given that the current state-of-the-art binary lifters output LLVM IR which cannot take advantage of some of these analysis passes (e.g. mem2reg), there is use for the tool.
+
+At current, at least one research group at Max Planck Institute of Technology has expressed interest in using the binary lifter for security analysis and analysis of concurrent memory accesses, both of which relying on LLVM IR. Similarly, working as an IT-security consultant, the author and their colleges would find a tool which facilitates binary analysis useful in their day-to-day security assessments.
+
+% === [ Pre-study ] ============================================================
+
+\section{Pre-study}
+
+% --- [ Literature studies ] ---------------------------------------------------
+
+\paragraph{Literature studies}
+
+The primary focus of the literature review is on research on the design, implementation and evaluation of binary lifters and binary analysis frameworks, considerations regarding the output IR, and methods for validating the correctness of binary lifters, including approaches for determining the semantics of ISA instructions (which at times is undocumented).
+
+The following set of preliminary important references have been identified: \cite{graph_based_ir,retargetable_binary_translator,dynamic_binary_translation,uqbt_binary_translator,retargetable_static_binary_translator,ssa_for_decompilation,valgrind,bitblaze,architecture_independent_binary_analysis_and_transformation,arm_analysis_using_llvm,bap,revgen,wartell_rewriting_x86_binaries,barf,singled_graph_disassembly,dbill,instruction_idiom_detection,graph_based_higher_order_ir,reconstruction_of_instruction_idioms,extracting_instruction_semantics_via_symbolic_exectuion_of_code_generators,software_transformation,state_of_the_art_of_war,function_recovery,bin2llvm,sound_transpilation_from_binary_to_ir,cast_study_llvm_suitable_for_binary_analysis,revng,evaluation_of_irs,binrec,lifter_synthesis,superset_disassembly,b2r2,llvm_ir_lifter_using_mcsema_and_dyninst,gtirb,case_for_bap_and_angr,retrowrite,refining_indirect_call_targets}.
+
+% === [ Conditions and Schedule ] ==============================================
+
+\section{Conditions and Schedule}
+
+% --- [ Resources Needed ] -----------------------------------------------------
+
+\paragraph{Resources Needed}
+
+Access to the Internet, a Unix laptop with LaTeX software, compilers (C/C++, Go) and LLVM tools installed. These resoruces are available to the degree project student.
+
+Access to research articles. Available through the KTH library.
+
+% --- [ Excluded from Scope ] --------------------------------------------------
+
+\paragraph{Excluded from Scope}
+
+No formal verification will be conducted of the correctness of the binary lifter.
+
+% --- [ Schedule ] -------------------------------------------------------------
+
+\paragraph{Schedule}
+
+Preliminary schedule for intermediate goals of the degree project:
+
+\begin{enumerate}
+	\item Literature review
+	\begin{enumerate}
+		\item (now - end of Dec) read, assess and evaluate research papers
+		\item (now - end of Dec) assess open source binary lifters presented in research
+		\item (Jan 2020) write literature review summary
+	\end{enumerate}
+	\item Prototype development
+	\begin{enumerate}
+		\item (Feb-Mar) implement binary lifter, while trying to mitigate some of the shortcomings of the assessed state-of-the-art binarya lifters
+	\end{enumerate}
+	\item Artefact development
+	\begin{enumerate}
+		\item (Apr-May) given a few iterations of prototypes, use what worked and discard what didn't when implementing the final artefact of the project
+	\end{enumerate}
+	\item Report writing
+	\begin{enumerate}
+		\item (Jun) write design section
+		\item (Jun) write implementation section
+		\item (Jul) write results section
+		\item (Jul) write evaluation/validation section
+		\item (Aug) write discussion section
+		\item (Aug) write conclusion section
+	\end{enumerate}
+	\item Degree project presentation
+	\begin{enumerate}
+		\item (Sep) present degree project, with peer conducting opposition
+	\end{enumerate}
+	\item Degree project opposition
+	\begin{enumerate}
+		\item (Sep) conduct opposition on peer degree project
+	\end{enumerate}
+	\item Final report submission
+	\begin{enumerate}
+		\item (Oct) with a few rounds of implemented feedback
+	\end{enumerate}
+\end{enumerate}
+
+% ___ [ Back matter ] __________________________________________________________
+
+% === [ References ] ===========================================================
+
+\bibliography{references}
+
+% === [ Appendices ] ===========================================================
+
+%\include{sections/appendices}
+
+\end{document}
