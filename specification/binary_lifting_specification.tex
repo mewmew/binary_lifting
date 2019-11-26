@@ -101,15 +101,15 @@ As part of the degree project, an assessment will be made into the effect of des
 
 The hypothesis being tested is: \textit{deliberate design decisions of how to model the ISA in a binary lifter may have huge consequence on the applicability and quality of the output IR}.
 
-To validate whether the hypothosis is true, the output IR of the binary lifter will be compared against that prior-art binary lifter research projects. The tests will be both on the correctness of translation (as further elaborated below), and on the applicability and quality of the output IR. The applicability is tested by conducting further analysis using pre-existing analysis tools (such as the symbolic execution engine KLEE and the LLVM optimizer). The set of successful analysis passes completed without modification of the output IR determines its applicability (e.g. the dead code elimination pass may be prevented from succeeding by incomplete knowledge of pointer aliasing or the requirement of expensive inter-procedural analysis, both of which may be the direct result of design decisions on how to model the ISA which could be mitigated with a more deliberately designed model of the ISA).
+To validate whether the hypothesis is true, the output IR of the binary lifter will be compared against that prior-art binary lifter research projects. The tests will be both on the correctness of translation (as further elaborated below), and on the applicability and quality of the output IR. The applicability is tested by conducting further analysis using pre-existing analysis tools (such as the symbolic execution engine KLEE and the LLVM optimizer). The set of successful analysis passes completed without modification of the output IR determines its applicability (e.g. the dead code elimination pass may be prevented from succeeding by incomplete knowledge of pointer aliasing or the requirement of expensive inter-procedural analysis, both of which may be the direct result of design decisions on how to model the ISA which could be mitigated with a more deliberately designed model of the ISA).
 
 % === [ Evaluation and News Value ] ============================================
 
 \section{Evaluation and News Value}
 
-% --- [ Evalution ] ------------------------------------------------------------
+% --- [ Evaluation ] -----------------------------------------------------------
 
-\paragraph{Evalution}
+\paragraph{Evaluation}
 
 There are three main approaches for validating correctness that have been used in prior research:
 
@@ -171,7 +171,7 @@ The following set of preliminary important references have been identified: \cit
 
 \paragraph{Resources Needed}
 
-Access to the Internet, a Unix laptop with LaTeX software, compilers (C/C++, Go) and LLVM tools installed. These resoruces are available to the degree project student.
+Access to the Internet, a Unix laptop with LaTeX software, compilers (C/C++, Go) and LLVM tools installed. These resources are available to the degree project student.
 
 Access to research articles. Available through the KTH library.
 
@@ -196,7 +196,7 @@ Preliminary schedule for intermediate goals of the degree project:
 	\end{enumerate}
 	\item Prototype development
 	\begin{enumerate}
-		\item (Feb-Mar) implement binary lifter, while trying to mitigate some of the shortcomings of the assessed state-of-the-art binarya lifters
+		\item (Feb-Mar) implement binary lifter, while trying to mitigate some of the shortcomings of the assessed state-of-the-art binary lifters
 	\end{enumerate}
 	\item Artefact development
 	\begin{enumerate}
