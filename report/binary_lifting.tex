@@ -1,10 +1,19 @@
-\documentclass[12pt, a4paper]{article}
+\documentclass{kththesis}
 
 \usepackage{preamble}
 
-\title{Type-aware binary lifting to LLVM IR}
+\title{Type-aware Binary Lifting to LLVM IR}
+\alttitle{Binärlyftning till LLVM IR med kännedom om typer}
 \author{Robin Eklind}
+\input{my_email}
+\supervisor{Roberto Guanciale (\url{robertog@kth.se})}
+\examiner{Mads Dam (\url{mfd@kth.se})}
+\programme{Master in Computer Science}
+\school{School of Electrical Engineering and Computer Science}
+\date{\today}
 %\date{2019-09-01}
+
+\kthcover{inc/cover/kth-cover.pdf}
 
 % Document
 
@@ -15,18 +24,18 @@
 
 % === [ Front matter ] =========================================================
 
-\pagenumbering{roman}
+% --- [ Front cover ] ----------------------------------------------------------
 
-% --- [ Cover page ] -----------------------------------------------------------
-
-%\includepdf[pages=-]{inc/cover/cover.pdf}
+% Front cover page.
+\frontmatter
 
 % --- [ Title page ] -----------------------------------------------------------
 
-\maketitle
+\titlepage
 
-% TODO: add abstract
-%\input{sections/abstract}
+% --- [ Abstract ] -------------------------------------------------------------
+
+\input{sections/abstract}
 
 \clearpage
 
@@ -39,36 +48,36 @@
 
 \tableofcontents
 
-\clearpage
-
 % --- [ Blank page ] -----------------------------------------------------------
 
 % No paper is complete without at least one blank page.
 
-\thispagestyle{empty}
-
-\vspace*{2.5cm}
-
-\begin{center}
-	\textit{This page is unintentionally left blank.}
-\end{center}
-
-\clearpage
+%\thispagestyle{empty}
+%
+%\vspace*{2.5cm}
+%
+%\begin{center}
+%	\textit{This page is unintentionally left blank.}
+%\end{center}
+%
+%\clearpage
 
 % === [ Main matter ] ==========================================================
 
-\pagenumbering{arabic}
+\mainmatter
 
-\include{sections/1_introduction}
-\include{sections/2_literature_review}
-\include{sections/3_related_work}
-\include{sections/4_methodology}
-\include{sections/5_requirements}
-\include{sections/6_design}
-\include{sections/7_implementation}
-\include{sections/8_verification}
-\include{sections/9_evaluation}
-\include{sections/10_conclusion}
+\include{sections/1_introduction}      % Introduction
+                                       %   -> Research Question
+\include{sections/2_literature_review} % Background
+\include{sections/3_related_work}      % Background
+\include{sections/4_methodology}       % Methods
+\include{sections/5_requirements}      % Methods
+                                       % Results
+\include{sections/6_design}            % ?
+\include{sections/7_implementation}    % ?
+\include{sections/8_verification}      % ?
+\include{sections/9_evaluation}        % Discussion
+\include{sections/10_conclusion}       % Conclusions
 
 % === [ Back matter ] ==========================================================
 
@@ -79,5 +88,10 @@
 % --- [ Appendices ] -----------------------------------------------------------
 
 \include{sections/appendices}
+
+% --- [ Back cover ] -----------------------------------------------------------
+
+% Back cover page.
+\tailmatter
 
 \end{document}
