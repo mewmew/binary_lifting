@@ -2,6 +2,12 @@
 
 \usepackage{preamble}
 
+% ref: https://www.kth.se/social/group/examensarbete-vid-cs/page/degree-project-checklist/
+%
+% # Title
+%
+% - [x] The title clearly describes the report.
+
 \title{Type-aware Binary Lifting to LLVM IR}
 \alttitle{Binärlyftning till LLVM IR med kännedom om typer}
 \author{Robin Eklind}
@@ -66,16 +72,21 @@
 
 \mainmatter
 
+% 1) Introduction
 \include{sections/1_introduction}      % Introduction
                                        %   -> Research Question
+% 2) Background
 \include{sections/2_literature_review} % Background
 \include{sections/3_related_work}      % Background
+% 3) Methods
 \include{sections/4_methodology}       % Methods
 \include{sections/5_requirements}      % Methods
+% 4) Results (objective observations)
                                        % Results
 \include{sections/6_design}            % ?
 \include{sections/7_implementation}    % ?
 \include{sections/8_verification}      % ?
+% Discussion and conclusions (subjective analyses)
 \include{sections/9_evaluation}        % Discussion
 \include{sections/10_conclusion}       % Conclusions
 
