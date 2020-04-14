@@ -1,0 +1,59 @@
+% === [ Binary Lifting ] =======================================================
+
+\section{Binary Lifting}
+
+% --- [ Indirect Branches ] ----------------------------------------------------
+
+\subsection{Indirect Branches}
+
+Indirect call and jump targets
+
+% --- [ Instruction Idioms ] ---------------------------------------------------
+
+\subsection{Instruction Idioms}
+
+Cifuentes
+
+% --- [ Instruction Semantics ] ------------------------------------------------
+
+\subsection{Instruction Semantics}
+
+LLVM IR representation of instruction semantics (Remill). Subset has been formally verified (Sandeep).
+
+% --- [ Calling Conventions ] --------------------------------------------------
+
+\subsection{Calling Conventions}
+
+Calling conventions on e.g. x86-64 Linux are a mess, but a defined mess.
+
+% --- [ Intermediate Representations ] -----------------------------------------
+
+\subsection{Intermediate Representations}
+
+Cite KAIST IR validation. List features by which IRs are evaluated.
+
+% --- [ Global Variables ] -----------------------------------------------------
+
+\subsection{Global Variables}
+
+* Global memory is flat byte array. Prohibitly limits pointer aliasing analysis.
+
+* RetDec (at least older version) does not output global variable definitions, only global variable declarations (ref to GitHub issue). As such, the output IR is not a self-contained unit (reference to terminology established by KAIST for IR features -- self-contained), and is missing the initializing contents.
+
+% --- [ Local Variables ] ------------------------------------------------------
+
+\subsection{Local Variables}
+
+* poor-mans symbolic execution: set SP to random (64-bit) value at function entry, run constant propagation, infer local variable stack locations based on offsets from the randomized SP value used in memory load/store operations  (Anvill).
+
+* Function local stack, allocated byte array.
+
+Problems: Local variables may be overlapping such that they share a memory location or register. They may also be duplicated, such that several memory locations/registers correspond to one local variable in the source file. SSA representation
+
+* Stack deconstruction (Sandeep)
+
+% --- [ Type Information ] -----------------------------------------------------
+
+\subsection{Type Information}
+
+Type information about global and local variables and function signatures is lost during the process of compilation. A subset of the type information may be available in debug information. Otherwise it has to be inferred through the process of type information recovery (type inference). (ref prev meta-paper?)
