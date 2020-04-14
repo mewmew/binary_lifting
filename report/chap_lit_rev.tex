@@ -1,0 +1,90 @@
+\documentclass{kththesis}
+
+\usepackage{preamble}
+
+% ref: https://www.kth.se/social/group/examensarbete-vid-cs/page/degree-project-checklist/
+%
+% # Title
+%
+% - [x] The title clearly describes the report.
+
+\title{Literature Review \\ \Large{Type-aware Binary Lifting to LLVM IR}}
+\alttitle{Binärlyftning till LLVM IR med kännedom om typer}
+\author{Robin Eklind}
+\input{my_email}
+\supervisor{Roberto Guanciale (\url{robertog@kth.se})}
+\examiner{Mads Dam (\url{mfd@kth.se})}
+\programme{Master in Computer Science}
+\school{School of Electrical Engineering and Computer Science}
+\date{\today}
+%\date{2019-09-01}
+
+\kthcover{inc/cover/kth-literature-review-cover.pdf}
+
+% Document
+
+% <howto>
+% * Critically evaluate why you are doing things, throughout the entire report.
+
+\begin{document}
+
+% === [ Front matter ] =========================================================
+
+% --- [ Front cover ] ----------------------------------------------------------
+
+% Front cover page.
+\frontmatter
+
+% --- [ Title page ] -----------------------------------------------------------
+
+\titlepage
+
+% --- [ Abstract ] -------------------------------------------------------------
+
+\clearpage
+
+% --- [ Acknowledgements ] -----------------------------------------------------
+
+% TODO: add acknowledgements
+%\include{sections/0_acknowledgements}
+
+% --- [ Table of contents ] ----------------------------------------------------
+
+\tableofcontents
+
+% --- [ Blank page ] -----------------------------------------------------------
+
+% No paper is complete without at least one blank page.
+
+%\thispagestyle{empty}
+%
+%\vspace*{2.5cm}
+%
+%\begin{center}
+%	\textit{This page is unintentionally left blank.}
+%\end{center}
+%
+%\clearpage
+
+% === [ Main matter ] ==========================================================
+
+\mainmatter
+
+\include{sections/2_literature_review} % Background
+
+% === [ Back matter ] ==========================================================
+
+% --- [ References ] -----------------------------------------------------------
+
+\bibliography{references}
+
+% --- [ Appendices ] -----------------------------------------------------------
+
+\include{sections/appendices}
+
+% --- [ Back cover ] -----------------------------------------------------------
+
+% Back cover page.
+\tailmatter
+
+\end{document}
