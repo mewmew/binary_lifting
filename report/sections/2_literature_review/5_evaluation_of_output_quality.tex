@@ -1,0 +1,25 @@
+% === [ Evaluation of Output Quality ] =========================================
+
+% used for evaluating the quality of the output LLVM IR.
+
+\section{Evaluation of Output Quality}
+
+To evaluate the quality of output LLVM IR, one metric would be whether or not existing tools for LLVM IR would be able to use the output IR. While this may seem lite an obvious requirement, many existing lifters output LLVM IR that is not self-contained, and thus cannot be used by other tools directly. One such example is RetDec, which does not output the initial contents of global variables and is thus not self-contained (TODO: add ref to RetDec GitHub issue). As such, this section gives a brief overview of tools available in the LLVM community which interact with LLVM IR.
+
+% --- [ KLEE - Symbolic Execution of LLVM IR ] ---------------------------------
+
+\subsection{KLEE - Symbolic Execution of LLVM IR}
+
+KLEE.
+
+% --- [ LLVM Optimizer ] -------------------------------------------------------
+
+\subsection{LLVM Optimizer}
+
+LLVM \texttt{opt}.
+
+% --- [ LLVM Interpreter ] -----------------------------------------------------
+
+\subsection{LLVM Interpreter}
+
+LLVM \texttt{lli}
