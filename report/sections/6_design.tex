@@ -28,3 +28,24 @@
 %\input{sections/6_design/2_foo}
 %\input{sections/6_design/3_foo}
 %\input{sections/6_design/4_foo}
+
+% TODO: add as subsections:
+%(semi)-novel contribution:
+%
+%### CPU Modelling
+%
+%Local CPU state structure flattened to stack allocated variables of each function. Functions are treated as black boxes interacting through calling conventions.
+%
+%Flatten fields of state structure function parameter to local variables, and propagate state changes across function boundaries using callee arguments, function parameters and return value(s) based on calling conventions.
+%
+%#### Assumptions
+%
+%Assumptions:
+%* Stack is balanced, instructions to modify SP do so in a balanced manner such that there is a matching incrementation/decrementation modifiers (e.g. push/pop), and upon function exit, the SP difference is 0.
+%* Return instructions always return to the next instructions after the call instruction of the caller.
+%
+%(reference paper that lists these assumptions)
+%
+%### Local Variables
+%
+%SSA representation: based on use-def chains (implicitly captured by SSA representation) and live range information of registers and stack variables (modelled as SSA variables), it should be possible to infer when a memory location or register is shared between two distinct local variables. This would be the case as there should be an execution point after initialization of the first local variable, upon which the memory location or register is re-defined (re-initialized), and at this point, we may split the variable into two variables, as they effectively do not influence once another.
