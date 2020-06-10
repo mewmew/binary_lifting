@@ -1,0 +1,33 @@
+% === [ Samples from State of the Art Binary Lifters ] =========================
+
+\chapter{Samples from State of the Art Binary Lifters}
+
+\section{Add sample}
+
+\lstinputlisting[language=nasm, style=nasm, tabsize=2, caption={Input assembly of \texttt{add.o} sample.}]{inc/3_related_work/x86_64-add/add.asm}
+
+\subsection{Dagger}
+
+\lstinputlisting[language=llvm, style=nasm, tabsize=2, caption={Output LLVM IR when lifting \texttt{add.o} sample using Dagger.}]{inc/3_related_work/x86_64-add/add.o.dagger.ll}
+
+\subsection{Ghidra-to-LLVM}
+
+\lstinputlisting[language=llvm, style=nasm, tabsize=2, caption={Output LLVM IR when lifting \texttt{add.o} sample using Ghidra-to-LLVM.}]{inc/3_related_work/x86_64-add/add.o.ghidra-to-llvm.ll}
+
+\subsection{llvm-mctoll}
+
+\todo{NOTE: llvm-mctoll failed to lift this sample}
+
+\subsection{reopt}
+
+\lstinputlisting[language=llvm, style=nasm, tabsize=2, caption={Output LLVM IR when lifting \texttt{add.o} sample using reopt.}]{inc/3_related_work/x86_64-add/add.o.reopt.ll}
+
+\subsection{RetDec}
+
+\lstinputlisting[language=llvm, style=nasm, tabsize=2, caption={Output LLVM IR when lifting \texttt{add.o} sample using RetDec.}]{inc/3_related_work/x86_64-add/add.o.retdec.ll}
+
+\subsection{rev.ng}
+
+\todo{NOTE: Cannot include listing, contains 158'828 lines of LLVM IR code.}
+
+%\lstinputlisting[language=llvm, style=nasm, tabsize=2, caption={Output LLVM IR when lifting \texttt{add.o} sample using rev.ng.}]{inc/3_related_work/x86_64-add/add.o.revng.ll}
