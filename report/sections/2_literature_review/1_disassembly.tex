@@ -8,17 +8,37 @@
 
 \subsection{Linear Sweep Disassembly}
 
+pro: simple algorithm, requires very little information about input binary
+
+con: does not take control flow of assembly instructions into account.
+
+problem: data in code (e.g. jump tables, string constants), variable length instructions (e.g. disassembly could start from wrong entry point)
+
 \todo{foo}
 
 % --- [ Recursive Descent Disassembly ] ----------------------------------------
 
 \subsection{Recursive Descent Disassembly}
 
+pro: takes control flow of assembly instructions into account. algorithm still simple, but slightly more advanced than linear sweep.
+
+con: requires more information about input binary, e.g. starting points of disassembly (often entry point of binary). does not disassembly unreachable functions (functions not invoked in the call graph of the entry points of the binary).
+
+problem: indirect branches. anti-reverse engineering methods (e.g. conditional branch, with one branch target into middle of instruction, and condition always true)
+
 \todo{foo}
 
 % --- [ Shingled Graph Disassembly ] -------------------------------------------
 
 \subsection{Shingled Graph Disassembly}
+
+method: start recursive descent disassembly from every byte offset of the binary. if the disassembler runs into an invalid instruction encoding, prune every part of the parse tree which may lead to this branch. (Note, if pruning is does in this way, then Shingled Graph Disassembly may be circumvented by the same anti-reverse engineering method mentioned in the recursive descent disassembly section, namely to have one branch of a conditional branch instruction target invalid assembly, and always have the condition be set to target the other branch. without CPU state knowledge, e.g. from symbolic/concrete/concolic execution, such information is not available to the shingled graph disassembly routine.)
+
+pro: disassembles every possible combination of assembly instructions, a forest of parse trees (\todo{check terminology, do they use forest?}).
+
+con: very computationally intensive, sometimes prohibitively so.
+
+problem: still need to prune the resulting forest of parse trees to determine what assembly instructions are actually executed by the program.
 
 \todo{foo}
 
