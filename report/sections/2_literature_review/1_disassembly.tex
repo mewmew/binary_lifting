@@ -4,6 +4,10 @@
 
 \section{Disassembly}
 
+A necessary component of any binary lifter is the disassembler, the purpose of which is to decode byte sequences of machine code into assembly instructions. Accurate decoding of assembly instructions and correct separation of code from data (see section \ref{sec:separating-code-from-data}) are both crucial as all subsequence passes of the binary lifter rely on their validity.
+
+A cross-validation assessment of industry quality disassembler libraries help provide insight into the difficulty of implementing accurate decoding of x86 machine code, especially due to the use of variable-length instruction encoding in the x86 ISA (Instruction Set Architecture), and several discrepancies in instruction decoding between different disassembler libraries were identified using differential fuzzing\footnote{In differential fuzzing of disassemblers, a byte sequence of machine code is generated, the byte sequence is decoded by different disassemblers and the results compared for discrepancies. If two or more disassemblers fail to agree on the decoded instruction(s) corresponding to the input byte sequence, at least one of them is known to be incorrect.} \cite{broken_x86_disassemblers}.
+
 % --- [ Linear Sweep Disassembly ] ---------------------------------------------
 
 \subsection{Linear Sweep Disassembly}
@@ -47,6 +51,7 @@ problem: still need to prune the resulting forest of parse trees to determine wh
 % --- [ Separating Code from Data ] --------------------------------------------
 
 \subsection{Separating Code from Data}
+\label{sec:separating-code-from-data}
 
 e.g. jump tables
 
