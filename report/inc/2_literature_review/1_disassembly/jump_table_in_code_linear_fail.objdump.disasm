@@ -1,0 +1,20 @@
+0000000b <f>:
+   b: 83 f9 00              cmp    $0x0,%ecx
+   e: 7c 2c                 jl     3c <f+0x31>
+  10: 83 f9 02              cmp    $0x2,%ecx
+  13: 7f 27                 jg     3c <f+0x31>
+  15: c1 e1 02              shl    $0x2,%ecx
+  18: ff a1 1e 00 00 00     jmp    *0x1e(%ecx)
+  1e: 2a 00                 sub    (%eax),%al
+  20: 00 00                 add    %al,(%eax)
+  22: 30 00                 xor    %al,(%eax)
+  24: 00 00                 add    %al,(%eax)
+  26: 36 00 00              add    %al,%ss:(%eax)
+  29: 00 b8 0c 00 00 00     add    %bh,0xc(%eax)
+  2f: c3                    ret
+  30: b8 2a 00 00 00        mov    $0x2a,%eax
+  35: c3                    ret
+  36: b8 1e 00 00 00        mov    $0x1e,%eax
+  3b: c3                    ret
+  3c: b8 00 00 00 00        mov    $0x0,%eax
+  41: c3                    ret

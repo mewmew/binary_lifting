@@ -8,21 +8,38 @@ A necessary component of any binary lifter is the disassembler, the purpose of w
 
 A cross-validation assessment of industry quality disassembler libraries help provide insight into the difficulty of implementing accurate decoding of x86 machine code, especially due to the use of variable-length instruction encoding in the x86 ISA (Instruction Set Architecture), and several discrepancies in instruction decoding between different disassembler libraries were identified using differential fuzzing\footnote{In differential fuzzing of disassemblers, a byte sequence of machine code is generated, the byte sequence is decoded by different disassemblers and the results compared for discrepancies. If two or more disassemblers fail to agree on the decoded instruction(s) corresponding to the input byte sequence, at least one of them is known to be incorrect.} \cite{broken_x86_disassemblers}.
 
+This section assesses different disassembly methods, evaluating their strengths and failure modes.
+
 % --- [ Linear Sweep Disassembly ] ---------------------------------------------
 
 \subsection{Linear Sweep Disassembly}
 
-pro: simple algorithm, requires very little information about input binary
+The simplest disassembly method is linear sweep disassembly which decodes byte sequences as a consecutive sequence of assembly instructions, without taking the control flow of instructions into consideration. The main benefit of this disassembly method is that it is simple to implement and has a very small memory overhead, however, the resulting disassembly is often incorrect as data in code segments may be incorrectly disassembled into assembly instructions. The failure mode of linear disassemblers (such as \texttt{objdump} and \texttt{ndisasm}) is especially pronounced when decoding machine code of ISAs with variable-length instructions, as data in between instructions may disrupt the start offset\footnote{The incorrect start offset causes the linear disassembler to start decoding from within the instruction rather than the start; e.g. byte offset 1 rather than 0.} of instructions being decoded resulting in incorrect decoding of multiple subsequent instructions.
 
-con: does not take control flow of assembly instructions into account.
+Common examples binary executables containing data in code segments include embedding of constant data\footnote{Constant data include string literals and read-only global variables.} (see listing \ref{lst:jump_table_in_code_asm}) and jump tables\footnote{A jump table is an array of valid branch targets, often used when compiling \texttt{switch}-statements.} (see listing \ref{lst:jump_table_in_code_asm}) in executable segments, and the corresponding disassembly failure (incorrect separation of code vs. data) for the linear disassembler \texttt{objdump} are presented in listing \ref{lst:code_in_data_linear_fail} and \ref{lst:jump_table_in_code_linear_fail}.
 
-problem: data in code (e.g. jump tables, string constants), variable length instructions (e.g. disassembly could start from wrong entry point)
+The main reason that linear sweep disassemblers fail to separate code from data is that they do not take control flow of assembly instruction into consideration when decoding. This shortcoming is mitigated by recursive descent disassemblers which are further introduced in section \ref{sec:recursive_descent_disassembly}.
 
-\todo{foo}
+\lstinputlisting[language=nasm, style=nasm, tabsize=2, linerange={5-20}, caption={\label{lst:data_in_code_asm}Assembly example with data in code.}]{inc/2_literature_review/1_disassembly/data_in_code.asm}
+
+\lstinputlisting[language=nasm, style=nasm, tabsize=2, caption={\label{lst:data_in_code_linear_fail}Linear disassembly failure due to data in code (\texttt{objdump}).}]{inc/2_literature_review/1_disassembly/data_in_code_linear_fail.objdump.disasm}
+
+\lstinputlisting[language=nasm, style=nasm, tabsize=2, linerange={13-43}, caption={\label{lst:jump_table_in_code_asm}Assembly example with jump table in code.}]{inc/2_literature_review/1_disassembly/jump_table_in_code.asm}
+
+\lstinputlisting[language=nasm, style=nasm, tabsize=2, caption={\label{lst:jump_table_in_code_linear_fail}Linear disassembly failure due to jump table in code (\texttt{objdump}).}]{inc/2_literature_review/1_disassembly/jump_table_in_code_linear_fail.objdump.disasm}
+
+%pro: simple algorithm, requires very little information about input binary
+
+%con: does not take control flow of assembly instructions into account.
+
+%problem: data in code (e.g. jump tables, string constants), variable length instructions (e.g. disassembly could start from wrong entry point)
 
 % --- [ Recursive Descent Disassembly ] ----------------------------------------
 
 \subsection{Recursive Descent Disassembly}
+\label{sec:recursive_descent_disassembly}
+
+\todo{continue here..}
 
 pro: takes control flow of assembly instructions into account. algorithm still simple, but slightly more advanced than linear sweep.
 
