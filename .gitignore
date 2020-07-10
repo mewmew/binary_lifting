@@ -5,9 +5,10 @@ my_email.tex
 _references_
 *.o
 # IDA auxilary files.
-*.id*
+*.id[b0-9]
 *.nam
 *.til
 # Executable samples.
 data_in_code
 jump_table_in_code
+fake_branch_target

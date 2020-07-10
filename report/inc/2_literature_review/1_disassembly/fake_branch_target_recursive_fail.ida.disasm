@@ -1,0 +1,7 @@
+.text:08000000 main:
+.text:08000000    mov     eax, 0
+.text:08000005    test    eax, eax
+.text:08000007    jz      fake_branch_target+1
+.text:08000009 fake_branch_target:
+.text:08000009    jmp     8002AC6h
+.text:0800000E    dw 0C300h
