@@ -10,7 +10,7 @@ main:
 	ret
 
 s:
-	db "foo bar", 10, 0
+	db "foo bar", 10, 0 ; <-- data in code segment
 
 print_str:
 	; printf(s)

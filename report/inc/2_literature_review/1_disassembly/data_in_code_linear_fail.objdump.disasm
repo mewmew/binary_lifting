@@ -1,17 +1,17 @@
 00000000 <main>:
    0: e8 0c 00 00 00        call   11 <main+0x11>
-   5: 31 c0                 xor    %eax,%eax
+   5: 31 c0                 xor    eax,eax
    7: c3                    ret
-   8: 66 6f                 outsw  %ds:(%esi),(%dx)
-   a: 6f                    outsl  %ds:(%esi),(%dx)
-   b: 20 62 61              and    %ah,0x61(%edx)
+   8: 66 6f                 outs   dx,WORD PTR ds:[esi]
+   a: 6f                    outs   dx,DWORD PTR ds:[esi]
+   b: 20 62 61              and    BYTE PTR [edx+0x61],ah
    e: 72 0a                 jb     1a <main+0x1a>
-  10: 00 68 08              add    %ch,0x8(%eax)
-  13: 00 00                 add    %al,(%eax)
-  15: 00 e8                 add    %ch,%al
+  10: 00 68 08              add    BYTE PTR [eax+0x8],ch
+  13: 00 00                 add    BYTE PTR [eax],al
+  15: 00 e8                 add    al,ch
   17: fc                    cld
   18: ff                    (bad)
   19: ff                    (bad)
   1a: ff                    .byte 0xff
-  1b: 83 c4 04              add    $0x4,%esp
+  1b: 83 c4 04              add    esp,0x4
   1e: c3                    ret

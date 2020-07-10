@@ -20,7 +20,7 @@ f:
 	shl     ecx, 2
 	jmp     DWORD[f.jump_table + ecx]
 
-  .jump_table:
+  .jump_table: ; <- jump table in code segment
 	dd f.case_0
 	dd f.case_1
 	dd f.case_2

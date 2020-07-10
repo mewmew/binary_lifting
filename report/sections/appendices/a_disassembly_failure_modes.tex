@@ -1,0 +1,29 @@
+% === [ Examples of Disassembly Failure Modes ] ================================
+
+% TODO: check when to use disassembly vs. disassembler.
+
+\chapter{Examples of Disassembly Failure Modes}
+\label{app:examples_of_disassembly_failure_modes}
+
+\section{Data in Code Segment}
+
+These examples illustrate the disassembly failure mode where data is not properly separated from code.
+
+% --- [ String Literal in Code ] -----------------------------------------------
+
+% TODO: use lstlisting LaTeX magic to highlight lines with incorrect
+% disassembly.
+
+\subsection{String Literal in Code}
+
+\lstinputlisting[linebackgroundcolor={\btLstHL{9}}, language=nasm, style=nasm, tabsize=2, linerange={5-20}, caption={Assembly example with data in code.}, label={lst:data_in_code_asm}]{inc/2_literature_review/1_disassembly/data_in_code.asm}
+
+\lstinputlisting[linebackgroundcolor={\btLstHL{5-15}}, language=nasm, style=nasm, tabsize=2, caption={Failure to disassemble listing \ref{lst:data_in_code_asm} using linear sweap disassember (\texttt{objdump}) due to data in code segment. Incorrect disassembly at lines 5-15.}, label={lst:data_in_code_linear_fail}]{inc/2_literature_review/1_disassembly/data_in_code_linear_fail.objdump.disasm}
+
+% --- [ Jump Table in Code Segment ] -------------------------------------------
+
+\subsection{Jump Table in Code Segment}
+
+\lstinputlisting[linebackgroundcolor={\btLstHL{11-14}}, language=nasm, style=nasm, tabsize=2, linerange={13-43}, caption={Assembly example with jump table in code.}, label={lst:jump_table_in_code_asm}]{inc/2_literature_review/1_disassembly/jump_table_in_code.asm}
+
+\lstinputlisting[linebackgroundcolor={\btLstHL{8-13}}, language=nasm, style=nasm, tabsize=2, caption={Failure to disassemble listing \ref{lst:jump_table_in_code_asm} using linear sweap disassember (\texttt{objdump}) due to jump table in code segment. Incorrect disassembly at lines 8-13.}, label={lst:jump_table_in_code_linear_fail}]{inc/2_literature_review/1_disassembly/jump_table_in_code_linear_fail.objdump.disasm}

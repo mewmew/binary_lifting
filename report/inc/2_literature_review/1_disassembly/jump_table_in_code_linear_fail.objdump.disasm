@@ -1,20 +1,20 @@
 0000000b <f>:
-   b: 83 f9 00              cmp    $0x0,%ecx
+   b: 83 f9 00              cmp    ecx,0x0
    e: 7c 2c                 jl     3c <f+0x31>
-  10: 83 f9 02              cmp    $0x2,%ecx
+  10: 83 f9 02              cmp    ecx,0x2
   13: 7f 27                 jg     3c <f+0x31>
-  15: c1 e1 02              shl    $0x2,%ecx
-  18: ff a1 1e 00 00 00     jmp    *0x1e(%ecx)
-  1e: 2a 00                 sub    (%eax),%al
-  20: 00 00                 add    %al,(%eax)
-  22: 30 00                 xor    %al,(%eax)
-  24: 00 00                 add    %al,(%eax)
-  26: 36 00 00              add    %al,%ss:(%eax)
-  29: 00 b8 0c 00 00 00     add    %bh,0xc(%eax)
+  15: c1 e1 02              shl    ecx,0x2
+  18: ff a1 1e 00 00 00     jmp    DWORD PTR [ecx+0x1e]
+  1e: 2a 00                 sub    al,BYTE PTR [eax]
+  20: 00 00                 add    BYTE PTR [eax],al
+  22: 30 00                 xor    BYTE PTR [eax],al
+  24: 00 00                 add    BYTE PTR [eax],al
+  26: 36 00 00              add    BYTE PTR ss:[eax],al
+  29: 00 b8 0c 00 00 00     add    BYTE PTR [eax+0xc],bh
   2f: c3                    ret
-  30: b8 2a 00 00 00        mov    $0x2a,%eax
+  30: b8 2a 00 00 00        mov    eax,0x2a
   35: c3                    ret
-  36: b8 1e 00 00 00        mov    $0x1e,%eax
+  36: b8 1e 00 00 00        mov    eax,0x1e
   3b: c3                    ret
-  3c: b8 00 00 00 00        mov    $0x0,%eax
+  3c: b8 00 00 00 00        mov    eax,0x0
   41: c3                    ret
